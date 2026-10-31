@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F1 Simulator 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eceef1;--pn:#fff;--pn2:#e4e7ec;--tx:#15171c;--mu:#59616e;--ac:#e10600;--ln:#cfd3da;--ok:#0f7d43;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--pn:#1a1d24;--pn2:#242832;--tx:#eceef2;--mu:#98a0ad;--ln:#2d323d;--ok:#3ddc84;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101216;--pn:#1a1d24;--pn2:#242832;--tx:#eceef2;--mu:#98a0ad;--ln:#2d323d;--ok:#3ddc84;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:960px;margin:0 auto;padding:14px 14px 30px}
+.h,.btn,.btn2{font-family:"Chakra Petch","Arial Narrow",system-ui,sans-serif}
+.h{font-weight:700;margin:0 0 4px}
+h2.h{font-size:24px}h3.h{font-size:18px;margin:18px 0 6px}
+small,.mu{color:var(--mu)}
+.home{min-height:84vh;display:flex;flex-direction:column;justify-content:center;gap:12px;max-width:400px;margin:0 auto;text-align:center}
+.logo{font-size:110px;font-style:italic;line-height:.9;color:var(--ac);letter-spacing:-.04em}
+.sub{font-size:19px;letter-spacing:.14em;margin-bottom:10px}
+.chk{height:16px;background:repeating-conic-gradient(var(--tx) 0 25%,transparent 0 50%) 0 0/16px 16px}
+.btn,.btn2{font-weight:700;font-size:16px;border-radius:8px;padding:12px 18px;cursor:pointer}
+.btn{background:var(--ac);color:#fff;border:2px solid var(--ac)}
+.btn2{background:var(--pn);color:var(--tx);border:2px solid var(--ln)}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:10px;padding:14px;margin:10px 0}
+.up{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.tc,.ci{text-align:left;background:var(--pn);color:var(--tx);border:1px solid var(--ln);border-left:7px solid var(--k,var(--ln));border-radius:10px;padding:12px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:5px}
+.tc.on,.ci.on{outline:3px solid var(--ac);background:var(--pn2)}
+.ci{border-left-color:var(--ln)}.ci.on{border-left-color:var(--ac)}
+.st{display:grid;grid-template-columns:48px 1fr 30px;gap:6px;align-items:center;font-size:12px}
+.st i{height:6px;background:var(--pn2);border-radius:3px;overflow:hidden}
+.st u{display:block;height:100%;background:var(--k,var(--ac))}
+.st em{font-style:normal;text-align:right}
+.tabs,.seg{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding:2px}
+.tabs button,.seg button{flex:none;padding:8px 14px;border-radius:999px;border:1px solid var(--ln);background:var(--pn);color:var(--tx);cursor:pointer;font:600 14px system-ui,sans-serif}
+.tabs .on,.seg .on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.hd{display:flex;justify-content:space-between;align-items:center;border-left:8px solid var(--k);padding-left:12px}
+.big{font-size:24px}.mn{font:700 22px "Chakra Petch",system-ui,sans-serif;color:var(--ok)}
+.foot{position:sticky;bottom:0;padding:14px 0 6px;background:linear-gradient(transparent,var(--bg) 35%);text-align:center}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.cnt{font:700 22px "Chakra Petch",sans-serif;margin-right:6px}.cnt.ok{color:var(--ok)}
+.sc{overflow-x:auto}
+.tb{width:100%;border-collapse:collapse;background:var(--pn);border-radius:10px}
+.tb td,.tb th{padding:7px 9px;border-bottom:1px solid var(--ln);text-align:left;white-space:nowrap}
+.tb tr.me{background:color-mix(in srgb,var(--ac) 16%,transparent)}
+.chip{display:inline-block;width:5px;height:16px;border-radius:2px;margin-right:8px;vertical-align:-3px}
+.gn{color:var(--ok)}.rd{color:var(--ac)}
+.cal{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.cal span{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--pn2);color:var(--mu)}
+.cal .dn{text-decoration:line-through}.cal .cur{background:var(--ac);color:#fff}
+.pips{letter-spacing:2px;color:var(--ac)}
+.sl{margin:12px 0}.sr{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}.sr input{width:100%;accent-color:var(--ac)}
+textarea{width:100%;margin:8px 0;background:var(--pn2);color:var(--tx);border:1px solid var(--ln);border-radius:8px;padding:8px;font:12px monospace}
+#toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:8px;opacity:0;transition:.2s;pointer-events:none;z-index:9}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+</style></head><body><main id="app"></main><div id="toast"></div>
+<script>
+const CL=['Aerodinamika','Power Unit','Sasis','Keandalan'],SL=['Aero','Mesin','Sasis','Andal.'];
+const FC=[['Wind Tunnel','+12% efektivitas upgrade Aero per level'],['Dyno Mesin','+12% efektivitas upgrade Power Unit per level'],['Pabrik Sasis','+12% efektivitas upgrade Sasis dan Keandalan per level'],['Simulator','+0,5 performa di semua sirkuit per level'],['Pit Crew Center','+0,3 performa di semua sirkuit per level']];
+const FCOST=[40,70,100,140,190];
+const PUs={M:['Mercedes',90],F:['Ferrari',88],R:['Red Bull Ford',84],H:['Honda',76],A:['Audi',72]};
+const TM='Red Bull Racing|#3671C6|R|86|87|86|5|Max Verstappen|98|Isack Hadjar|82;Ferrari|#E8002D|F|86|85|84|5|Charles Leclerc|94|Lewis Hamilton|94;Mercedes|#27F4D2|M|88|88|90|5|George Russell|93|Kimi Antonelli|89;McLaren|#FF8000|M|88|88|88|5|Lando Norris|94|Oscar Piastri|92;Aston Martin|#229971|H|80|80|76|4|Fernando Alonso|92|Lance Stroll|80;Alpine|#FF87BC|M|76|77|78|3|Pierre Gasly|87|Franco Colapinto|80;Williams|#64C4FF|M|79|78|80|3|Alex Albon|88|Carlos Sainz|90;Racing Bulls|#6692FF|R|76|76|77|3|Liam Lawson|82|Arvid Lindblad|78;Audi|#B3203B|A|75|77|72|4|Nico Hülkenberg|86|Gabriel Bortoleto|82;Haas|#8E9BA5|F|75|74|79|3|Esteban Ocon|85|Oliver Bearman|86;Cadillac|#C9A227|F|68|70|72|4|Sergio Pérez|83|Valtteri Bottas|83'.split(';').map(s=>{const a=s.split('|');return{n:a[0],k:a[1],u:a[2],c:[+a[3],PUs[a[2]][1],+a[4],+a[5]],s:+a[6],d:[[a[7],+a[8]],[a[9],+a[10]]]}});
+const C='Albert Park|Australia|2|2|1;Sepang|Malaysia|2|3|0;Shanghai|Tiongkok|2|2|1;Suzuka|Jepang|3|2|1;Bahrain|Bahrain|2|3|1;Jeddah|Arab Saudi|2|3|1;Miami|AS|2|2|1;Imola|Italia|3|2|0;Montreal|Kanada|1|3|1;Monaco|Monako|3|1|1;Barcelona-Catalunya|Spanyol|3|2|1;Portimão|Portugal|2|2|0;Red Bull Ring|Austria|2|3|1;Silverstone|Inggris|3|2|1;Spa-Francorchamps|Belgia|2|3|1;Nürburgring|Jerman|2|2|0;Hungaroring|Hungaria|3|1|1;Zandvoort|Belanda|3|1|2;Monza|Italia|1|3|1;Mugello|Italia|3|2|0;Madring|Spanyol|2|2|1;Baku|Azerbaijan|1|3|1;Istanbul Park|Turki|3|2|0;Marina Bay|Singapura|3|1|1;Circuit of the Americas|AS|2|2|1;Hermanos Rodríguez|Meksiko|3|2|1;Interlagos|Brasil|2|2|1;Las Vegas|AS|1|3|1;Lusail|Qatar|3|2|2;Yas Marina|Abu Dhabi|2|2|1'.split(';').map(s=>{const a=s.split('|');return{n:a[0],c:a[1],a:+a[2],p:+a[3],r:+a[4]}});
+const mem={};
+const sg=k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return mem[k]||null};
+const ss=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){mem[k]=v}};
+const sd=k=>{try{localStorage.removeItem(k)}catch(e){}delete mem[k]};
+const $=id=>document.getElementById(id),R=()=>(Math.random()+Math.random()+Math.random()-1.5)*2;
+let S=null,ST={dif:1,chaos:1,auto:1,theme:0,tr:2},scr='home',tab='b',sel=-1,CS=new Set(),stv='d';
+try{Object.assign(ST,JSON.parse(sg('f1s_set')))}catch(e){}
+const DM=()=>[.8,1,1.25][ST.dif],DB=()=>[1.2,0,-1.2][ST.dif];
+const fm=v=>'$'+Math.round(v)+' jt',back='<button class="btn2" onclick="go(\'home\')">← Menu</button>';
+const ovr=c=>(c[0]+c[1]+c[2]+c[3]*.5)/3.5;
+const ds=()=>S.d.map((d,i)=>({...d,i})).sort((a,b)=>b.p-a.p||b.w-a.w||a.i-b.i);
+const ts=()=>S.t.map((t,i)=>({...t,i})).sort((a,b)=>b.p-a.p||a.i-b.i);
+const pack=()=>JSON.stringify({m:{team:TM[S.me].n,y:S.y,rd:S.rd},S});
+const auto=()=>{ST.auto&&ss('f1s_auto',pack())};
+const info=k=>{const a=sg(k);if(!a)return null;try{return JSON.parse(a).m}catch(e){return null}};
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1900)}
+function applyTheme(){const t=['','light','dark'][ST.theme];t?document.documentElement.dataset.theme=t:delete document.documentElement.dataset.theme}
+function go(s){scr=s;render();scrollTo(0,0)}
+function render(){$('app').innerHTML=({home:vHome,team:vTeam,cal:vCal,hub:vHub,set:vSet,sv:vSv})[scr]()}
+const setT=t=>{tab=t;render()},setV=v=>{stv=v;render()},pickT=i=>{sel=i;render()};
+
+const vHome=()=>`<div class="home"><div class="chk"></div><div class="h logo">F1</div><div class="h sub">SIMULATOR 2026</div><button class="btn" onclick="go('team')">▶ Play</button><button class="btn2" onclick="go('set')">⚙ Settings</button><button class="btn2" onclick="go('sv')">💾 Save / Load</button><small>11 tim, 30 sirkuit, 22 race per musim</small><div class="chk"></div></div>`;
+
+function vTeam(){
+ let c='';const m=S?{team:TM[S.me].n,y:S.y,rd:S.rd}:info('f1s_auto');
+ if(m)c=`<div class="card"><b>${S?'Game berjalan':'Autosave'}:</b> ${m.team}, musim ${m.y}, race ${m.rd}<div class="row"><button class="btn" onclick="${S?"go('hub')":"load('f1s_auto')"}">Lanjutkan</button></div></div>`;
+ return `${back}<h2 class="h" style="margin-top:12px">Pilih tim untuk musim 2026</h2>${c}<div class="grid">${TM.map((t,i)=>`<button class="tc ${sel==i?'on':''}" style="--k:${t.k}" onclick="pickT(${i})"><b class="h">${t.n}</b><small>Mesin ${PUs[t.u][0]}. ${t.d[0][0].split(' ').pop()} dan ${t.d[1][0].split(' ').pop()}</small>${t.c.map((v,j)=>`<div class="st"><span>${SL[j]}</span><i><u style="width:${(v-50)*2}%"></u></i><em>${v}</em></div>`).join('')}</button>`).join('')}</div><div class="foot"><button class="btn" ${sel<0?'disabled':''} onclick="newGame()">${sel<0?'Pilih satu tim':'Mulai dengan '+TM[sel].n}</button></div>`}
+
+function newGame(){
+ S={y:2026,me:sel,m:100,rd:0,cal:[],f:[0,0,0,0,0],h:[],last:null,t:TM.map(t=>({c:[...t.c],p:0})),d:TM.flatMap((t,i)=>t.d.map(d=>({n:d[0],s:d[1],t:i,p:0,w:0})))};
+ CS=new Set(C.map((c,i)=>c.r==1?i:-1).filter(i=>i>=0));go('cal')}
+function vCal(){const n=CS.size;return `${back}<h2 class="h" style="margin-top:12px">Pilih 22 race musim ${S.y}</h2><p class="mu">Pilih tepat 22 dari 30 sirkuit. Urutan race mengikuti daftar.</p><div class="bar"><span class="cnt ${n==22?'ok':''}">${n}/22</span><button class="btn2" onclick="preset(0)">Kalender 2026</button><button class="btn2" onclick="preset(1)">Acak</button><button class="btn2" onclick="preset(2)">Kosongkan</button></div><div class="grid">${C.map((c,i)=>`<button class="ci ${CS.has(i)?'on':''}" onclick="tog(${i})"><b>${c.n}</b><small>${c.c}. Aero ${'●'.repeat(c.a)} Power ${'●'.repeat(c.p)}</small></button>`).join('')}</div><div class="foot"><button class="btn" ${n==22?'':'disabled'} onclick="start()">Mulai musim ${S.y}</button></div>`}
+function preset(k){CS=k==0?new Set(C.map((c,i)=>c.r==1?i:-1).filter(i=>i>=0)):k==1?new Set(C.map((_,i)=>i).sort(()=>Math.random()-.5).slice(0,22)):new Set();render()}
+function tog(i){CS.has(i)?CS.delete(i):(CS.size<22?CS.add(i):toast('Sudah 22 race, lepas satu dulu'));render()}
+function start(){S.cal=[...CS].sort((a,b)=>a-b);S.rd=0;S.last=null;tab='b';auto();go('hub')}
+
+const TABS=[['b','Beranda'],['w','Weekend'],['u','Upgrade'],['s','Klasemen'],['r','Hasil']];
+function vHub(){const T=TM[S.me];return `<div class="hd" style="--k:${T.k}"><div><b class="h big">${T.n}</b><br><small>Musim ${S.y}, ${S.rd} dari ${S.cal.length} race selesai</small></div><div class="mn">${fm(S.m)}</div></div><div class="tabs">${TABS.map(([k,l])=>`<button class="${tab==k?'on':''}" onclick="setT('${k}')">${l}</button>`).join('')}<button onclick="go('home')">☰ Menu</button></div>`+({b:vB,w:vW,u:vU,s:vS,r:vR})[tab]()}
+
+function vB(){
+ const n=S.cal.length,rk=ts().findIndex(x=>x.i==S.me)+1;let h;
+ if(S.rd>=n){const dc=ds()[0],tc=ts()[0];h=`<div class="card"><h2 class="h">🏁 Musim ${S.y} selesai</h2><p>Juara dunia: <b>${dc.n}</b> (${TM[dc.t].n})<br>Juara konstruktor: <b>${TM[tc.i].n}</b><br>Tim kamu finis <b>P${rk}</b>, hadiah ${fm(150-(rk-1)*11)}</p><button class="btn" onclick="nextSeason()">Lanjut ke musim ${S.y+1}</button></div>`}
+ else{const i=S.cal[S.rd],c=C[i];h=`<div class="card"><small>Race ${S.rd+1} dari ${n}</small><h2 class="h">${c.n} GP</h2><p class="mu">${c.c}. Aero ${'●'.repeat(c.a)} Power ${'●'.repeat(c.p)}</p><p>Performa mobilmu di sini: <b>${perf(S.me,i).toFixed(1)}</b>. Konstruktor: <b>P${rk}</b> dengan ${S.t[S.me].p} poin.</p><div class="row"><button class="btn" onclick="${S.wk?"setT('w')":"startWk()"}">${S.wk?'⏭ Lanjut weekend':'🏁 Mulai weekend race'}</button><button class="btn2" onclick="doRace()">⚡ Sim cepat race</button><button class="btn2" onclick="doAll()">⏩ Sampai akhir musim</button></div></div>`}
+ return h+(S.tl&&S.tl.length?`<div class="card"><b>Bursa transfer ${S.y}</b>${S.tl.map(x=>`<br><small>${x}</small>`).join('')}</div>`:'')+`<div class="card"><b>Kalender ${S.y}</b><div class="cal">${S.cal.map((i,j)=>`<span class="${j<S.rd?'dn':j==S.rd?'cur':''}">${j+1}. ${C[i].n}</span>`).join('')}</div></div>`+(S.h.length?`<div class="card"><b>Riwayat musim</b>${S.h.map(x=>`<br><small>${x.y}: juara ${x.dc}, konstruktor ${x.tc}, tim kamu P${x.r}</small>`).join('')}</div>`:'')}
+
+const fl=i=>S.f[[0,1,2,2][i]];
+const gain=i=>Math.max(.4,(97-S.t[S.me].c[i])*.1)*(1+.12*fl(i));
+const ucost=i=>Math.round((10+(S.t[S.me].c[i]-50)*.7)*DM());
+function vU(){const c=S.t[S.me].c;
+ return `<h3 class="h">Upgrade mobil</h3>`+CL.map((n,i)=>{const k=ucost(i);return `<div class="card up"><div style="flex:1"><b>${n}</b> <span class="mu">${c[i].toFixed(1)}</span><div class="st" style="grid-template-columns:1fr;--k:var(--ac);margin-top:6px"><i><u style="width:${(c[i]-50)*2}%"></u></i></div></div><button class="btn2" ${S.m<k||c[i]>=99?'disabled':''} onclick="buyU(${i})">+${gain(i).toFixed(1)} untuk ${fm(k)}</button></div>`}).join('')
+ +`<h3 class="h">Fasilitas</h3>`+FC.map((f,i)=>{const l=S.f[i],k=Math.round(FCOST[l]*DM());return `<div class="card up"><div><b>${f[0]}</b> <span class="pips">${'■'.repeat(l)}${'□'.repeat(5-l)}</span><br><small>${f[1]}</small></div>${l<5?`<button class="btn2" ${S.m<k?'disabled':''} onclick="buyF(${i})">Level ${l+1} untuk ${fm(k)}</button>`:'<b>MAX</b>'}</div>`}).join('')}
+function buyU(i){const k=ucost(i);if(S.m<k)return;const c=S.t[S.me].c;c[i]=Math.min(99,c[i]+gain(i));S.m-=k;auto();render()}
+function buyF(i){const k=Math.round(FCOST[S.f[i]]*DM());if(S.m<k||S.f[i]>=5)return;S.m-=k;S.f[i]++;auto();toast(FC[i][0]+' naik ke level '+S.f[i]);render()}
+
+function vS(){const D=stv=='d',L=D?ds():ts();return `<div class="tabs"><button class="${D?'on':''}" onclick="setV('d')">Pembalap</button><button class="${D?'':'on'}" onclick="setV('t')">Konstruktor</button></div><div class="sc"><table class="tb">${L.map((x,j)=>{const t=D?x.t:x.i;return `<tr class="${t==S.me?'me':''}"><td>${j+1}</td><td><i class="chip" style="background:${TM[t].k}"></i>${D?x.n+' <small>'+TM[t].n+'</small>':TM[t].n}</td><td><b>${x.p}</b></td></tr>`}).join('')}</table></div>`}
+function vR(){const l=S.last;if(!l)return `<div class="card">Belum ada hasil. Simulasikan race pertama dari tab Beranda.</div>`;
+ return `<h3 class="h">${l.y}, race ${l.rd}: ${C[l.ci].n}</h3><div class="sc"><table class="tb"><tr><th>Pos</th><th>Grid</th><th>Pembalap</th><th>Poin</th></tr>${l.rows.map((r,j)=>{const d=S.d[r.i],g=r.g-(j+1);return `<tr class="${d.t==S.me?'me':''}"><td>${r.x?'DNF':j+1}</td><td>${r.g}${r.x?'':g>0?` <small class="gn">▲${g}</small>`:g<0?` <small class="rd">▼${-g}</small>`:''}</td><td><i class="chip" style="background:${TM[d.t].k}"></i>${d.n} <small>${TM[d.t].n}</small></td><td>${r.pt||''}</td></tr>`}).join('')}</table></div>`}
+
+function perf(t,ci){const T=S.t[t],c=C[ci];let r=(T.c[0]*c.a+T.c[1]*c.p+T.c[2]*2)/(c.a+c.p+2);if(t==S.me)r+=S.f[3]*.5+S.f[4]*.3+DB()+(S.wk?su(ci)-1:0);return r}
+const WK=['FP1','FP2','FP3','Kualifikasi','Race'],SU=[['Sayap (downforce)','Rendah','Tinggi'],['Rasio gigi','Akselerasi','Kecepatan puncak'],['Suspensi','Lunak','Keras']];
+const ideal=ci=>{const c=C[ci];return[[22,50,78][c.a-1]+(ci*13)%15-7,[22,50,78][c.p-1]+(ci*7)%15-7,(ci*37+S.y*11)%56+22]};
+const su=ci=>{const d=ideal(ci);return 2-S.wk.su.reduce((s,v,j)=>s+Math.abs(v-d[j]),0)/3*.06};
+const bs=(i,ci)=>perf(S.d[i].t,ci)*.65+S.d[i].s*.35;
+function qual(ci){const k=[.6,1,1.5][ST.chaos];return S.d.map((d,i)=>{const b=bs(i,ci);return{i,b,q:b+R()*1.5*k}}).sort((a,b)=>b.q-a.q).map((r,j)=>({i:r.i,b:r.b,q:r.q,g:j+1}))}
+function startWk(){S.wk={st:0,su:[50,50,50],fb:null,tb:null,grid:null,ses:''};auto();setT('w');scrollTo(0,0)}
+function setU(j,v){S.wk.su[j]=+v;$('sv'+j).textContent=v}
+function runSes(){
+ const w=S.wk,ci=S.cal[S.rd];
+ if(w.st<3){const sd=Math.max(4,[18,12,7][w.st]-S.f[3]*1.5),d=ideal(ci);w.fb=w.su.map((v,j)=>v-d[j]+R()*sd);const t=S.d.map((x,i)=>({i,v:bs(i,ci)+R()*(x.t==S.me?.5:1.4)})).sort((a,b)=>b.v-a.v);w.tb=t.map(r=>({i:r.i,gap:(t[0].v-r.v)*.07}));w.ses='FP'+(w.st+1)}
+ else if(w.st==3){w.grid=qual(ci);w.ses='Kualifikasi';w.fb=null;w.tb=w.grid.map(r=>({i:r.i,gap:(w.grid[0].q-r.q)*.07}))}
+ else{sim();auto();tab='r';render();scrollTo(0,0);return}
+ w.st++;auto();render()}
+function vW(){
+ const w=S.wk;if(!w)return `<div class="card">Belum ada weekend berjalan. Mulai dari tab Beranda.</div>`;
+ const c=C[S.cal[S.rd]],lock=w.st>=4;
+ const fb=w.fb?`<small>Masukan tim setelah ${w.ses}:</small>`+w.fb.map((h,j)=>`<br>${SU[j][0]}: ${Math.abs(h)<7?'sudah pas':'geser '+(Math.abs(h)>25?'jauh':'sedikit')+' ke '+(h>0?SU[j][1]:SU[j][2])}`).join(''):'<small>Jalankan free practice untuk mendapat masukan set-up. Makin banyak sesi dan makin tinggi level Simulator, makin akurat.</small>';
+ const sl=SU.map((s,j)=>`<div class="sl"><b>${s[0]}</b> <span id="sv${j}">${w.su[j]}</span><div class="sr"><small>${s[1]}</small><input type="range" min="0" max="100" value="${w.su[j]}" ${lock?'disabled':''} oninput="setU(${j},this.value)"><small>${s[2]}</small></div></div>`).join('');
+ const tb=w.tb?`<h3 class="h">Hasil ${w.ses}</h3><div class="sc"><table class="tb">${w.tb.map((r,j)=>{const d=S.d[r.i];return `<tr class="${d.t==S.me?'me':''}"><td>${j+1}</td><td><i class="chip" style="background:${TM[d.t].k}"></i>${d.n} <small>${TM[d.t].n}</small></td><td>${j?'+'+r.gap.toFixed(3):'Tercepat'}</td></tr>`}).join('')}</table></div>`:'';
+ return `<div class="card"><b class="h">${c.n} GP</b><div class="cal">${WK.map((n,j)=>`<span class="${j<w.st?'dn':j==w.st?'cur':''}">${n}</span>`).join('')}</div><div class="row"><button class="btn" onclick="runSes()">▶ Jalankan ${WK[w.st]}</button></div></div><div class="card"><b>Set-up mobil</b>${lock?' <small>(terkunci setelah kualifikasi)</small>':''}${sl}${fb}</div>${tb}`}
+function sim(){
+ const ci=S.cal[S.rd],k=[.6,1,1.5][ST.chaos],P=[25,18,15,12,10,8,6,4,2,1];
+ const rows=(S.wk&&S.wk.grid)||qual(ci);
+ rows.forEach(r=>{const T=S.t[S.d[r.i].t];r.x=Math.random()<.015+(100-T.c[3])/100*.22*k;r.v=r.b+R()*2.8*k+(22-r.g)*.07});
+ const fin=rows.filter(r=>!r.x).sort((a,b)=>b.v-a.v).concat(rows.filter(r=>r.x));
+ fin.forEach((r,j)=>{r.pt=r.x?0:(P[j]||0);const d=S.d[r.i];d.p+=r.pt;S.t[d.t].p+=r.pt;if(j==0&&!r.x)d.w++});
+ S.last={ci,y:S.y,rd:S.rd+1,rows:fin.map(r=>({i:r.i,g:r.g,x:r.x,pt:r.pt}))};
+ S.t.forEach((T,t)=>{if(t!=S.me)T.c=T.c.map(v=>Math.min(99,v+Math.random()*(99-v)*.012*[.8,1,1.4][ST.dif]))});
+ S.m+=TM[S.me].s*1.5;S.rd++;S.wk=null;S.tl=null}
+function doRace(){sim();auto();tab='r';render();scrollTo(0,0)}
+function doAll(){while(S.rd<S.cal.length)sim();auto();tab='s';render();scrollTo(0,0)}
+function nextSeason(){
+ const r=ts().findIndex(x=>x.i==S.me);S.h.push({y:S.y,dc:ds()[0].n,tc:TM[ts()[0].i].n,r:r+1});S.m+=150-r*11;S.y++;S.rd=0;S.last=null;
+ S.t.forEach((T,t)=>{T.p=0;if(t!=S.me)T.c=T.c.map(v=>Math.min(99,Math.max(60,v+R()*1.2)))});
+ S.d.forEach(d=>{d.p=d.w=0;d.s=Math.min(99,Math.max(70,d.s+R()*1.2))});
+ S.tl=null;const n=[0,2,3,4][ST.tr];
+ if(n&&(S.y-2026)%n==0){S.tl=[];for(let z=0;z<5;z++){const a=S.d[Math.random()*22|0],b=S.d[Math.random()*22|0];if(a.t==b.t)continue;S.tl.push(`${a.n}: ${TM[a.t].n} ke ${TM[b.t].n}`,`${b.n}: ${TM[b.t].n} ke ${TM[a.t].n}`);[a.t,b.t]=[b.t,a.t]}}
+ CS=new Set(S.cal);tab='b';go('cal')}
+
+const seg=(k,l)=>`<div class="seg">${l.map((x,i)=>`<button class="${ST[k]==i?'on':''}" onclick="setS('${k}',${i})">${x}</button>`).join('')}</div>`;
+function setS(k,v){ST[k]=v;ss('f1s_set',JSON.stringify(ST));applyTheme();render()}
+const vSet=()=>`${back}<h2 class="h" style="margin-top:12px">Settings</h2><div class="card"><b>Tingkat kesulitan</b>${seg('dif',['Mudah','Normal','Sulit'])}<small>Memengaruhi performa mobilmu, biaya upgrade, dan laju pengembangan tim lawan.</small></div><div class="card"><b>Keacakan race</b>${seg('chaos',['Rendah','Normal','Tinggi'])}<small>Semakin tinggi, semakin besar peluang kejutan dan DNF.</small></div><div class="card"><b>Autosave setiap race</b>${seg('auto',['Mati','Hidup'])}</div><div class="card"><b>Transfer pembalap acak</b>${seg('tr',['Mati','Tiap 2 musim','Tiap 3 musim','Tiap 4 musim'])}<small>Saat bursa transfer, beberapa pembalap bertukar tim secara acak. Berlaku juga untuk tim kamu.</small></div><div class="card"><b>Tema</b>${seg('theme',['Auto','Terang','Gelap'])}</div>`;
+
+function slot(k,l,n){const m=info(k);return `<div class="card"><b>${l}</b> <span class="mu">${m?`${m.team}, ${m.y}, race ${m.rd}`:'Kosong'}</span><div class="row">${n&&S?`<button class="btn2" onclick="save(${n})">Simpan</button>`:''}${m?`<button class="btn" onclick="load('${k}')">Muat</button>`:''}${m&&n?`<button class="btn2" onclick="del('${k}')">Hapus</button>`:''}</div></div>`}
+const vSv=()=>`${back}<h2 class="h" style="margin-top:12px">Save / Load</h2>`+(S?'':'<p class="mu">Mulai game dulu untuk bisa menyimpan. Slot yang terisi bisa langsung dimuat.</p>')+[1,2,3].map(n=>slot('f1s_'+n,'Slot '+n,n)).join('')+slot('f1s_auto','Autosave',0)+`<div class="card"><b>Kode save</b><br><small>Salin kode untuk cadangan atau pindah perangkat.</small><textarea id="code" rows="3"></textarea><div class="row"><button class="btn2" onclick="exp()">Ekspor game ini</button><button class="btn2" onclick="imp()">Impor kode</button></div></div>`;
+function save(n){ss('f1s_'+n,pack());toast('Tersimpan di slot '+n);render()}
+function load(k){try{S=JSON.parse(sg(k)).S;tab='b';go('hub')}catch(e){toast('Save tidak bisa dimuat')}}
+function del(k){sd(k);render()}
+function exp(){if(!S)return toast('Belum ada game berjalan');$('code').value=btoa(unescape(encodeURIComponent(pack())))}
+function imp(){try{S=JSON.parse(decodeURIComponent(escape(atob($('code').value.trim())))).S;tab='b';go('hub')}catch(e){toast('Kode tidak valid')}}
+applyTheme();render();
+</script></body></html>
